@@ -98,15 +98,15 @@ export default function Layout() {
             <MdMenu className="w-5 h-5" />
           </button>
           <div className="flex-1">
-            <div className="flex items-center gap-2">
+            {/* <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
               <span className="text-xs text-slate-500">System Online</span>
-            </div>
+            </div> */}
           </div>
-          <div className="text-right hidden sm:block">
+          {/* <div className="text-right hidden sm:block">
             <p className="text-sm text-slate-300">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
             <p className="text-xs text-slate-500">{new Date().toLocaleTimeString()}</p>
-          </div>
+          </div> */}
         </header>
 
         <main className="flex-1 p-4 lg:p-6">

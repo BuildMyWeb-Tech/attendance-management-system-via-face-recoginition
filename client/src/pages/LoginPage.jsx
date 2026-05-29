@@ -42,13 +42,13 @@ export default function LoginPage() {
             <MdConstruction className="w-9 h-9 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-white">FaceTrack</h1>
-          <p className="text-slate-400 text-sm mt-1">Construction Attendance System</p>
+          <p className="text-slate-400 text-sm mt-1">Attendance System</p>
         </div>
 
         <div className="card p-8 shadow-2xl">
           <div className="mb-6">
             <h2 className="text-lg font-semibold text-slate-100">Admin Login</h2>
-            <p className="text-slate-500 text-sm mt-1">Sign in to manage attendance</p>
+            {/* <p className="text-slate-500 text-sm mt-1">Sign in to manage attendance</p> */}
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -92,11 +92,11 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6 p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+          {/* <div className="mt-6 p-3 bg-slate-800/50 rounded-lg border border-slate-700">
             <p className="text-xs text-slate-500 text-center">
               Default credentials: <span className="text-slate-300">admin</span> / <span className="text-slate-300">admin123</span>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

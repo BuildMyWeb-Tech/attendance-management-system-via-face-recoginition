@@ -85,7 +85,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <button onClick={() => navigate('/verify')} className="card p-6 text-left hover:border-primary-700 hover:bg-primary-900/10 transition-all group border border-slate-800">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 bg-primary-900/50 rounded-xl flex items-center justify-center group-hover:bg-primary-600/30 transition-all">
@@ -119,7 +119,7 @@ export default function DashboardPage() {
             </div>
           </div>
         </button>
-      </div>
+      </div> */}
 
       {/* Recent logs */}
       <div className="card overflow-hidden">
@@ -142,7 +142,7 @@ export default function DashboardPage() {
                   <th className="px-6 py-3 text-left font-medium">Employee</th>
                   <th className="px-6 py-3 text-left font-medium hidden sm:table-cell">Department</th>
                   <th className="px-6 py-3 text-left font-medium">Time</th>
-                  <th className="px-6 py-3 text-left font-medium">Status</th>
+                  {/* <th className="px-6 py-3 text-left font-medium">Status</th> */}
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
@@ -156,7 +156,7 @@ export default function DashboardPage() {
                     </td>
                     <td className="px-6 py-4 text-slate-400 hidden sm:table-cell">{log.department || 'General'}</td>
                     <td className="px-6 py-4 text-slate-400">{log.time}</td>
-                    <td className="px-6 py-4"><StatusBadge status={log.status} /></td>
+                    {/* <td className="px-6 py-4"><StatusBadge status={log.status} /></td> */}
                   </tr>
                 ))}
               </tbody>

@@ -16,7 +16,7 @@ const server = http.createServer(app);
 initSocket(server);
 
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: process.env.CLIENT_URL || 'http://localhost:5173' || 'https://attendance-management-system-via-fa-six.vercel.app',
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));

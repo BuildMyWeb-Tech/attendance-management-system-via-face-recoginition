@@ -109,7 +109,7 @@ export default function VerificationPage() {
     <div className="space-y-6 max-w-2xl">
       <div>
         <h1 className="text-2xl font-bold text-white">Face Verification</h1>
-        <p className="text-slate-400 text-sm mt-1">Scan face to mark attendance automatically</p>
+        {/* <p className="text-slate-400 text-sm mt-1">Scan face to mark attendance automatically</p> */}
       </div>
 
       {/* Camera */}
@@ -213,7 +213,7 @@ export default function VerificationPage() {
       </div>
 
       {/* Instructions */}
-      <div className="card p-4 bg-slate-900/50">
+      {/* <div className="card p-4 bg-slate-900/50">
         <h3 className="text-sm font-semibold text-slate-300 mb-3">How to use</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-400">
           {['Position your face inside the oval ring', 'Click Auto Scan for hands-free detection', 'Attendance is marked automatically on match'].map((t, i) => (
@@ -223,7 +223,7 @@ export default function VerificationPage() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

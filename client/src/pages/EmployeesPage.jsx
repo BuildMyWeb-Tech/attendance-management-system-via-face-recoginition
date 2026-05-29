@@ -146,10 +146,10 @@ export default function EmployeesPage() {
 
               <div className="mt-4 pt-4 border-t border-slate-800 flex items-center justify-between">
                 <DeptBadge dept={emp.department} />
-                <div className="flex items-center gap-1">
+                {/* <div className="flex items-center gap-1">
                   <div className="w-2 h-2 bg-emerald-500 rounded-full" />
                   <span className="text-slate-500 text-xs">{emp.faceDescriptors?.length || 0} face angles</span>
-                </div>
+                </div> */}
               </div>
 
               <p className="text-slate-600 text-xs mt-2">

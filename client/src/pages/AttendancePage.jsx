@@ -57,9 +57,9 @@ export default function AttendancePage() {
           <button onClick={fetchRecords} className="btn-secondary flex items-center gap-2 text-sm">
             <MdRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
           </button>
-          <button onClick={exportCSV} className="btn-secondary flex items-center gap-2 text-sm">
+          {/* <button onClick={exportCSV} className="btn-secondary flex items-center gap-2 text-sm">
             <MdDownload className="w-4 h-4" /> Export CSV
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -115,7 +115,7 @@ export default function AttendancePage() {
                     <th className="px-6 py-3 text-left font-medium hidden md:table-cell">Department</th>
                     <th className="px-6 py-3 text-left font-medium">Date</th>
                     <th className="px-6 py-3 text-left font-medium hidden sm:table-cell">Time</th>
-                    <th className="px-6 py-3 text-left font-medium">Status</th>
+                    {/* <th className="px-6 py-3 text-left font-medium">Status</th> */}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-800">
@@ -126,7 +126,7 @@ export default function AttendancePage() {
                       <td className="px-6 py-4 text-slate-400 hidden md:table-cell">{r.department || 'General'}</td>
                       <td className="px-6 py-4 text-slate-400">{r.date}</td>
                       <td className="px-6 py-4 text-slate-400 hidden sm:table-cell">{r.time}</td>
-                      <td className="px-6 py-4"><StatusBadge status={r.status} /></td>
+                      {/* <td className="px-6 py-4"><StatusBadge status={r.status} /></td> */}
                     </tr>
                   ))}
                 </tbody>

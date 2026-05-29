@@ -141,7 +141,7 @@ export default function RegistrationPage() {
     <div className="space-y-6 max-w-3xl">
       <div>
         <h1 className="text-2xl font-bold text-white">Register Employee</h1>
-        <p className="text-slate-400 text-sm mt-1">Capture face images for attendance recognition</p>
+        {/* <p className="text-slate-400 text-sm mt-1">Capture face images for attendance recognition</p> */}
       </div>
 
       {step === 'form' && (
@@ -171,7 +171,7 @@ export default function RegistrationPage() {
                 <select value={form.department} onChange={e => setForm(p => ({ ...p, department: e.target.value }))}
                   className="input-field pl-10 appearance-none">
                   <option value="">Select Department</option>
-                  {['Site Supervisor', 'Foreman', 'Electrician', 'Plumber', 'Carpenter', 'Labour', 'Safety Officer', 'Engineer', 'General'].map(d => (
+                  {['Site Supervisor', 'Electrician', 'Plumber', 'Labour', 'Safety Officer', 'Engineer', 'General'].map(d => (
                     <option key={d} value={d}>{d}</option>
                   ))}
                 </select>
