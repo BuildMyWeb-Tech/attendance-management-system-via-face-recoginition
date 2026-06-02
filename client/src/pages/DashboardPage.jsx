@@ -2,17 +2,13 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { attendanceAPI } from '../services/api';
 import { connectSocket } from '../socket/socket';
+import PWAInstallButton from '../components/ui/PWAInstallButton';
 import {
-  MdPeople, MdCheckCircle, MdAccessTime, MdTrendingUp,
-  MdFaceRetouchingNatural, MdPersonAdd, MdRefresh, MdList
+  MdPeople, MdCheckCircle, MdAccessTime, MdTrendingUp, MdRefresh
 } from 'react-icons/md';
 
 const StatusBadge = ({ status }) => {
-  const map = {
-    present: 'badge-success',
-    late: 'badge-warning',
-    absent: 'badge-danger',
-  };
+  const map = { present: 'badge-success', late: 'badge-warning', absent: 'badge-danger' };
   return <span className={map[status] || 'badge-success'}>{status}</span>;
 };
 
@@ -23,6 +19,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   const fetchDashboard = useCallback(async () => {
+    setLoading(true);
     try {
       const res = await attendanceAPI.getDashboard();
       setStats(res.data.stats);
@@ -45,22 +42,32 @@ export default function DashboardPage() {
   }, [fetchDashboard]);
 
   const statCards = [
-    { label: 'Total Employees', value: stats.totalEmployees, icon: MdPeople, color: 'text-blue-400', bg: 'bg-blue-900/20 border-blue-800/30' },
-    { label: 'Present Today', value: stats.todayCount, icon: MdCheckCircle, color: 'text-emerald-400', bg: 'bg-emerald-900/20 border-emerald-800/30' },
-    { label: "Today's Date", value: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), icon: MdAccessTime, color: 'text-amber-400', bg: 'bg-amber-900/20 border-amber-800/30' },
-    {
-      label: 'Attendance Rate',
+    { label: 'Total Employees', value: stats.totalEmployees, icon: MdPeople,      color: 'text-blue-400',   bg: 'bg-blue-900/20 border-blue-800/30'     },
+    { label: 'Present Today',   value: stats.todayCount,    icon: MdCheckCircle,  color: 'text-emerald-400',bg: 'bg-emerald-900/20 border-emerald-800/30'},
+    { label: "Today's Date",    value: new Date().toLocaleDateString('en-IN', { month: 'short', day: 'numeric', timeZone: 'Asia/Kolkata' }),
+                                                              icon: MdAccessTime,   color: 'text-amber-400',  bg: 'bg-amber-900/20 border-amber-800/30'   },
+    { label: 'Attendance Rate',
       value: stats.totalEmployees ? `${Math.round((stats.todayCount / stats.totalEmployees) * 100)}%` : '0%',
-      icon: MdTrendingUp, color: 'text-purple-400', bg: 'bg-purple-900/20 border-purple-800/30'
-    },
+      icon: MdTrendingUp, color: 'text-purple-400', bg: 'bg-purple-900/20 border-purple-800/30' },
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
+
+      {/* ── PWA install banner — spot C (image 2): above Refresh ── */}
+      <PWAInstallButton variant="banner" />
+
+      {/* Header row */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Dashboard</h1>
-          <p className="text-slate-400 text-sm mt-1">Attendance overview for {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <p className="text-slate-400 text-sm mt-1">
+            Attendance overview for{' '}
+            {new Date().toLocaleDateString('en-IN', {
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+              timeZone: 'Asia/Kolkata'
+            })}
+          </p>
         </div>
         <button onClick={fetchDashboard} className="btn-secondary flex items-center gap-2 text-sm">
           <MdRefresh className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} /> Refresh
@@ -84,48 +91,13 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {/* Quick actions */}
-      {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <button onClick={() => navigate('/verify')} className="card p-6 text-left hover:border-primary-700 hover:bg-primary-900/10 transition-all group border border-slate-800">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-primary-900/50 rounded-xl flex items-center justify-center group-hover:bg-primary-600/30 transition-all">
-              <MdFaceRetouchingNatural className="w-6 h-6 text-primary-400" />
-            </div>
-            <div>
-              <p className="font-semibold text-slate-200">Mark Attendance</p>
-              <p className="text-slate-500 text-sm mt-0.5">Scan face to mark attendance</p>
-            </div>
-          </div>
-        </button>
-        <button onClick={() => navigate('/register')} className="card p-6 text-left hover:border-emerald-700 hover:bg-emerald-900/10 transition-all group border border-slate-800">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-emerald-900/30 rounded-xl flex items-center justify-center group-hover:bg-emerald-600/30 transition-all">
-              <MdPersonAdd className="w-6 h-6 text-emerald-400" />
-            </div>
-            <div>
-              <p className="font-semibold text-slate-200">Register Employee</p>
-              <p className="text-slate-500 text-sm mt-0.5">Add new employee face data</p>
-            </div>
-          </div>
-        </button>
-        <button onClick={() => navigate('/employees')} className="card p-6 text-left hover:border-slate-600 hover:bg-slate-800/50 transition-all group border border-slate-800">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center group-hover:bg-slate-700 transition-all">
-              <MdPeople className="w-6 h-6 text-slate-400" />
-            </div>
-            <div>
-              <p className="font-semibold text-slate-200">View Employees</p>
-              <p className="text-slate-500 text-sm mt-0.5">Manage registered employees</p>
-            </div>
-          </div>
-        </button>
-      </div> */}
-
       {/* Recent logs */}
       <div className="card overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
           <h2 className="font-semibold text-slate-200">Recent Attendance</h2>
-          <button onClick={() => navigate('/attendance')} className="text-primary-400 hover:text-primary-300 text-sm">View all →</button>
+          <button onClick={() => navigate('/attendance')} className="text-primary-400 hover:text-primary-300 text-sm">
+            View all →
+          </button>
         </div>
         {loading ? (
           <div className="p-8 text-center text-slate-500">
@@ -141,22 +113,18 @@ export default function DashboardPage() {
                 <tr className="text-slate-500 text-xs uppercase tracking-wide border-b border-slate-800">
                   <th className="px-6 py-3 text-left font-medium">Employee</th>
                   <th className="px-6 py-3 text-left font-medium hidden sm:table-cell">Department</th>
-                  <th className="px-6 py-3 text-left font-medium">Time</th>
-                  {/* <th className="px-6 py-3 text-left font-medium">Status</th> */}
+                  <th className="px-6 py-3 text-left font-medium">Time (IST)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
                 {logs.map((log, i) => (
                   <tr key={i} className="hover:bg-slate-800/50 transition-colors">
                     <td className="px-6 py-4">
-                      <div>
-                        <p className="font-medium text-slate-200">{log.employeeName}</p>
-                        <p className="text-slate-500 text-xs">{log.employeeId}</p>
-                      </div>
+                      <p className="font-medium text-slate-200">{log.employeeName}</p>
+                      <p className="text-slate-500 text-xs">{log.employeeId}</p>
                     </td>
                     <td className="px-6 py-4 text-slate-400 hidden sm:table-cell">{log.department || 'General'}</td>
                     <td className="px-6 py-4 text-slate-400">{log.time}</td>
-                    {/* <td className="px-6 py-4"><StatusBadge status={log.status} /></td> */}
                   </tr>
                 ))}
               </tbody>

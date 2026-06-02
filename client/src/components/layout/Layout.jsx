@@ -1,9 +1,10 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import PWAInstallButton from '../ui/PWAInstallButton';
 import {
   MdDashboard, MdPersonAdd, MdFaceRetouchingNatural, MdAssignment,
-  MdLogout, MdMenu, MdClose, MdConstruction, MdPerson, MdPeople
+  MdLogout, MdMenu, MdConstruction, MdPerson, MdPeople
 } from 'react-icons/md';
 
 const navItems = [
@@ -41,6 +42,7 @@ export default function Layout() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
+      {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
         <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
           <MdConstruction className="w-6 h-6 text-white" />
@@ -51,21 +53,34 @@ export default function Layout() {
         </div>
       </div>
 
+      {/* Nav links */}
       <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
         {navItems.map(item => <NavItem key={item.to} {...item} />)}
       </nav>
 
-      <div className="px-4 py-4 border-t border-slate-800">
-        <div className="flex items-center gap-3 px-4 py-3 mb-2">
-          <div className="w-8 h-8 bg-primary-900 rounded-full flex items-center justify-center">
+      {/* Bottom: admin info + install + logout */}
+      <div className="px-4 py-4 border-t border-slate-800 space-y-1">
+        {/* Admin info row */}
+        <div className="flex items-center gap-3 px-4 py-3">
+          <div className="w-8 h-8 bg-primary-900 rounded-full flex items-center justify-center flex-shrink-0">
             <MdPerson className="w-4 h-4 text-primary-400" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-slate-200 truncate">{admin?.name}</p>
             <p className="text-xs text-slate-500">Administrator</p>
           </div>
+          {/* Install icon — spot A (image 3): next to Super Admin */}
+          <PWAInstallButton variant="icon" className="ml-auto flex-shrink-0" />
         </div>
-        <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:bg-red-900/20 rounded-xl transition-all text-sm">
+
+        {/* Install full button */}
+        <PWAInstallButton variant="full" />
+
+        {/* Sign out */}
+        <button
+          onClick={handleLogout}
+          className="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:bg-red-900/20 rounded-xl transition-all text-sm"
+        >
           <MdLogout className="w-5 h-5" />
           <span>Sign Out</span>
         </button>
@@ -93,20 +108,19 @@ export default function Layout() {
       {/* Main content */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
         {/* Top bar */}
-        <header className="sticky top-0 z-20 bg-slate-950/90 backdrop-blur border-b border-slate-800 px-4 lg:px-6 py-4 flex items-center gap-4">
-          <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400">
+        <header className="sticky top-0 z-20 bg-slate-950/90 backdrop-blur border-b border-slate-800 px-4 lg:px-6 py-4 flex items-center gap-3">
+          {/* Mobile hamburger — spot B (image 2): left side of navbar */}
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400"
+          >
             <MdMenu className="w-5 h-5" />
           </button>
-          <div className="flex-1">
-            {/* <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-              <span className="text-xs text-slate-500">System Online</span>
-            </div> */}
-          </div>
-          {/* <div className="text-right hidden sm:block">
-            <p className="text-sm text-slate-300">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</p>
-            <p className="text-xs text-slate-500">{new Date().toLocaleTimeString()}</p>
-          </div> */}
+
+          <div className="flex-1" />
+
+          {/* Install button in navbar — spot B (image 2): parallel to hamburger, right side */}
+          <PWAInstallButton variant="icon" />
         </header>
 
         <main className="flex-1 p-4 lg:p-6">
