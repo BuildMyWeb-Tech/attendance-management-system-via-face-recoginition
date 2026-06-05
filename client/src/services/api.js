@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const api = axios.create({
   baseURL: `${API_URL}/api`,
-  headers: { 'Content-Type': 'application/json' }
+  headers: { 'Content-Type': 'application/json' },
 });
 
 api.interceptors.request.use((config) => {
@@ -25,17 +25,18 @@ api.interceptors.response.use(
 );
 
 export const authAPI = {
-  login: (data) => api.post('/auth/login', data),
-  getMe: () => api.get('/auth/me'),
+  login:  (data) => api.post('/auth/login', data),
+  getMe:  ()     => api.get('/auth/me'),
 };
 
 export const employeeAPI = {
-  register: (formData) => api.post('/employees/register', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  getAll: () => api.get('/employees'),
-  getById: (id) => api.get(`/employees/${id}`),
-  delete: (id) => api.delete(`/employees/${id}`),
+  register: (formData) =>
+    api.post('/employees/register', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }),
+  getAll:   ()    => api.get('/employees'),
+  getById:  (id)  => api.get(`/employees/${id}`),
+  delete:   (id)  => api.delete(`/employees/${id}`),
 };
 
 export const faceAPI = {
@@ -43,10 +44,27 @@ export const faceAPI = {
 };
 
 export const attendanceAPI = {
-  mark: (data) => api.post('/attendance/mark', data),
-  getToday: () => api.get('/attendance/today'),
-  getAll: (params) => api.get('/attendance/all', { params }),
-  getDashboard: () => api.get('/attendance/dashboard'),
+  mark:         (data)   => api.post('/attendance/mark', data),
+  getToday:     ()       => api.get('/attendance/today'),
+  getAll:       (params) => api.get('/attendance/all', { params }),
+  getDashboard: ()       => api.get('/attendance/dashboard'),
+};
+
+export const locationAPI = {
+  getAll:   ()       => api.get('/locations'),
+  create:   (data)   => api.post('/locations', data),
+  update:   (id, data) => api.put(`/locations/${id}`, data),
+  delete:   (id)     => api.delete(`/locations/${id}`),
+};
+
+export const gatePunchAPI = {
+  validateLocation: (lat, lng)   => api.post('/gate/validate-location', { lat, lng }),
+  verifyFace:       (descriptor) => api.post('/gate/verify-face', { descriptor }),
+  punch:            (formData)   =>
+    api.post('/gate/punch', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }),
+  getLogs: (params) => api.get('/gate/logs', { params }),
 };
 
 export default api;

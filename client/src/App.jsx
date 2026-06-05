@@ -1,14 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
-import RegistrationPage from './pages/RegistrationPage';
-import VerificationPage from './pages/VerificationPage';
-import AttendancePage from './pages/AttendancePage';
-import EmployeesPage from './pages/EmployeesPage';
-import NotFoundPage from './pages/NotFoundPage';
-import Layout from './components/layout/Layout';
+import LoginPage          from './pages/LoginPage';
+import DashboardPage      from './pages/DashboardPage';
+import RegistrationPage   from './pages/RegistrationPage';
+import VerificationPage   from './pages/VerificationPage';
+import AttendancePage     from './pages/AttendancePage';
+import EmployeesPage      from './pages/EmployeesPage';
+import NotFoundPage       from './pages/NotFoundPage';
+import LocationsPage      from './pages/LocationsPage';
+import GatePunchDashboard from './pages/GatePunchDashboard';
+import GatePunchScanner   from './pages/GatePunchScanner';
+import Layout             from './components/layout/Layout';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -28,13 +31,21 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />} />
+
+      {/* Public gate punch scanner — no login needed */}
+      <Route path="/gate-punch" element={<GatePunchScanner />} />
+
+      {/* Protected admin routes */}
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index element={<DashboardPage />} />
-        <Route path="employees" element={<EmployeesPage />} />
-        <Route path="register" element={<RegistrationPage />} />
-        <Route path="verify" element={<VerificationPage />} />
-        <Route path="attendance" element={<AttendancePage />} />
+        <Route index                element={<DashboardPage />} />
+        <Route path="employees"     element={<EmployeesPage />} />
+        <Route path="register"      element={<RegistrationPage />} />
+        <Route path="verify"        element={<VerificationPage />} />
+        <Route path="attendance"    element={<AttendancePage />} />
+        <Route path="locations"     element={<LocationsPage />} />
+        <Route path="gate-dashboard" element={<GatePunchDashboard />} />
       </Route>
+
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
@@ -50,7 +61,7 @@ export default function App() {
           toastOptions={{
             style: { background: '#1e293b', color: '#f1f5f9', border: '1px solid #334155' },
             success: { iconTheme: { primary: '#10b981', secondary: '#1e293b' } },
-            error: { iconTheme: { primary: '#ef4444', secondary: '#1e293b' } },
+            error:   { iconTheme: { primary: '#ef4444', secondary: '#1e293b' } },
           }}
         />
       </BrowserRouter>

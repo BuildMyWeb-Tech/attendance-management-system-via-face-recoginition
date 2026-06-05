@@ -4,15 +4,18 @@ import { useAuth } from '../../context/AuthContext';
 import PWAInstallButton from '../ui/PWAInstallButton';
 import {
   MdDashboard, MdPersonAdd, MdFaceRetouchingNatural, MdAssignment,
-  MdLogout, MdMenu, MdConstruction, MdPerson, MdPeople
+  MdLogout, MdMenu, MdConstruction, MdPerson, MdPeople,
+  MdLocationOn, MdSensors,
 } from 'react-icons/md';
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: MdDashboard, exact: true },
-  { to: '/employees', label: 'Employees', icon: MdPeople },
-  { to: '/register', label: 'Register Employee', icon: MdPersonAdd },
-  { to: '/verify', label: 'Face Verify', icon: MdFaceRetouchingNatural },
-  { to: '/attendance', label: 'Attendance', icon: MdAssignment },
+  { to: '/',               label: 'Dashboard',        icon: MdDashboard,            exact: true },
+  { to: '/employees',      label: 'Employees',         icon: MdPeople                            },
+  { to: '/register',       label: 'Register Employee', icon: MdPersonAdd                         },
+  { to: '/verify',         label: 'Face Verify',       icon: MdFaceRetouchingNatural             },
+  { to: '/attendance',     label: 'Attendance',        icon: MdAssignment                        },
+  { to: '/locations',      label: 'Locations',         icon: MdLocationOn                        },
+  { to: '/gate-dashboard', label: 'Gate Punches',      icon: MdSensors                           },
 ];
 
 export default function Layout() {
@@ -20,7 +23,10 @@ export default function Layout() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => { logout(); navigate('/login'); };
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   const NavItem = ({ to, label, icon: Icon, exact }) => (
     <NavLink
@@ -28,11 +34,10 @@ export default function Layout() {
       end={exact}
       onClick={() => setSidebarOpen(false)}
       className={({ isActive }) =>
-        `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-150 ${
-          isActive
-            ? 'bg-primary-600/20 text-primary-400 border border-primary-600/30'
-            : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
-        }`
+        'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-150 ' +
+        (isActive
+          ? 'bg-primary-600/20 text-primary-400 border border-primary-600/30'
+          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800')
       }
     >
       <Icon className="w-5 h-5 flex-shrink-0" />
@@ -42,6 +47,7 @@ export default function Layout() {
 
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
+
       {/* Logo */}
       <div className="flex items-center gap-3 px-6 py-6 border-b border-slate-800">
         <div className="w-10 h-10 bg-primary-600 rounded-xl flex items-center justify-center">
@@ -55,12 +61,27 @@ export default function Layout() {
 
       {/* Nav links */}
       <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-        {navItems.map(item => <NavItem key={item.to} {...item} />)}
+        {navItems.map(item => (
+          <NavItem key={item.to} {...item} />
+        ))}
+
+        {/* Gate Punch Scanner — opens in new tab */}
+        
+         {/* Gate Punch Scanner — opens in new tab */}
+<a
+  href="/gate-punch"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-emerald-400 hover:bg-emerald-900/20 transition-all border border-emerald-800/30 mt-2"
+>
+  <MdSensors className="w-5 h-5 flex-shrink-0" />
+  <span>Open Gate Scanner</span>
+  <span className="ml-auto text-xs bg-emerald-900/40 px-1.5 py-0.5 rounded">↗</span>
+</a>
       </nav>
 
-      {/* Bottom: admin info + install + logout */}
+      {/* Bottom: admin + install + logout */}
       <div className="px-4 py-4 border-t border-slate-800 space-y-1">
-        {/* Admin info row */}
         <div className="flex items-center gap-3 px-4 py-3">
           <div className="w-8 h-8 bg-primary-900 rounded-full flex items-center justify-center flex-shrink-0">
             <MdPerson className="w-4 h-4 text-primary-400" />
@@ -69,14 +90,11 @@ export default function Layout() {
             <p className="text-sm font-medium text-slate-200 truncate">{admin?.name}</p>
             <p className="text-xs text-slate-500">Administrator</p>
           </div>
-          {/* Install icon — spot A (image 3): next to Super Admin */}
           <PWAInstallButton variant="icon" className="ml-auto flex-shrink-0" />
         </div>
 
-        {/* Install full button */}
         <PWAInstallButton variant="full" />
 
-        {/* Sign out */}
         <button
           onClick={handleLogout}
           className="w-full flex items-center gap-3 px-4 py-2.5 text-red-400 hover:bg-red-900/20 rounded-xl transition-all text-sm"
@@ -85,11 +103,13 @@ export default function Layout() {
           <span>Sign Out</span>
         </button>
       </div>
+
     </div>
   );
 
   return (
     <div className="min-h-screen bg-slate-950 flex">
+
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex flex-col w-64 bg-slate-900 border-r border-slate-800 fixed h-full z-10">
         <SidebarContent />
@@ -98,7 +118,10 @@ export default function Layout() {
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-black/60" onClick={() => setSidebarOpen(false)} />
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setSidebarOpen(false)}
+          />
           <aside className="absolute left-0 top-0 h-full w-64 bg-slate-900 border-r border-slate-800 z-50">
             <SidebarContent />
           </aside>
@@ -107,25 +130,23 @@ export default function Layout() {
 
       {/* Main content */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
+
         {/* Top bar */}
         <header className="sticky top-0 z-20 bg-slate-950/90 backdrop-blur border-b border-slate-800 px-4 lg:px-6 py-4 flex items-center gap-3">
-          {/* Mobile hamburger — spot B (image 2): left side of navbar */}
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden p-2 rounded-lg hover:bg-slate-800 text-slate-400"
           >
             <MdMenu className="w-5 h-5" />
           </button>
-
           <div className="flex-1" />
-
-          {/* Install button in navbar — spot B (image 2): parallel to hamburger, right side */}
           <PWAInstallButton variant="icon" />
         </header>
 
         <main className="flex-1 p-4 lg:p-6">
           <Outlet />
         </main>
+
       </div>
     </div>
   );
