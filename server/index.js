@@ -3,8 +3,8 @@ const http    = require('http');
 const cors    = require('cors');
 const dotenv  = require('dotenv');
 const path    = require('path');
-const connectDB   = require('./config/db');
-const seedAdmin   = require('./config/seed');
+const connectDB      = require('./config/db');
+const seedAdmin      = require('./config/seed');
 const { initSocket } = require('./sockets/socketHandler');
 
 dotenv.config();
@@ -26,13 +26,13 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Routes
 app.use('/api/auth',       require('./routes/authRoutes'));
 app.use('/api/employees',  require('./routes/employeeRoutes'));
 app.use('/api/face',       require('./routes/faceRoutes'));
 app.use('/api/attendance', require('./routes/attendanceRoutes'));
-app.use('/api/locations',  require('./routes/locationRoutes'));   // NEW
-app.use('/api/gate',       require('./routes/gatePunchRoutes'));  // NEW
+app.use('/api/locations',  require('./routes/locationRoutes'));
+app.use('/api/gate',       require('./routes/gatePunchRoutes'));
+app.use('/api/qr',         require('./routes/qrRoutes'));       // NEW
 
 app.get('/api/health', (req, res) =>
   res.json({ status: 'OK', timestamp: new Date() })

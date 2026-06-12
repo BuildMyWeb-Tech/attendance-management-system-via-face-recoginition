@@ -34,9 +34,9 @@ export const employeeAPI = {
     api.post('/employees/register', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  getAll:   ()    => api.get('/employees'),
-  getById:  (id)  => api.get(`/employees/${id}`),
-  delete:   (id)  => api.delete(`/employees/${id}`),
+  getAll:  ()    => api.get('/employees'),
+  getById: (id)  => api.get(`/employees/${id}`),
+  delete:  (id)  => api.delete(`/employees/${id}`),
 };
 
 export const faceAPI = {
@@ -51,10 +51,10 @@ export const attendanceAPI = {
 };
 
 export const locationAPI = {
-  getAll:   ()       => api.get('/locations'),
-  create:   (data)   => api.post('/locations', data),
-  update:   (id, data) => api.put(`/locations/${id}`, data),
-  delete:   (id)     => api.delete(`/locations/${id}`),
+  getAll:          ()          => api.get('/locations'),
+  create:          (data)      => api.post('/locations', data),
+  update:          (id, data)  => api.put(`/locations/${id}`, data),
+  delete:          (id)        => api.delete(`/locations/${id}`),
 };
 
 export const gatePunchAPI = {
@@ -65,6 +65,17 @@ export const gatePunchAPI = {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
   getLogs: (params) => api.get('/gate/logs', { params }),
+};
+
+export const qrAPI = {
+  verifyEmployee:     (employeeId) => api.get('/qr/verify/' + employeeId),
+  markAttendance:     (data)       => api.post('/qr/mark-attendance', data),
+  saveLog:            (data)       => api.post('/qr/log', data),
+  getLogs:            (params)     => api.get('/qr/logs', { params }),
+  exportLogsCSV:      (params)     => api.get('/qr/logs/export', {
+    params,
+    responseType: 'blob',
+  }),
 };
 
 export default api;

@@ -11,6 +11,9 @@ import NotFoundPage       from './pages/NotFoundPage';
 import LocationsPage      from './pages/LocationsPage';
 import GatePunchDashboard from './pages/GatePunchDashboard';
 import GatePunchScanner   from './pages/GatePunchScanner';
+import QRGeneratorPage    from './pages/QRGeneratorPage';
+import QRScannerPage      from './pages/QRScannerPage';
+import QRScanLogsPage     from './pages/QRScanLogsPage';
 import Layout             from './components/layout/Layout';
 
 const ProtectedRoute = ({ children }) => {
@@ -32,18 +35,21 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />} />
 
-      {/* Public gate punch scanner — no login needed */}
+      {/* Public pages — no login required */}
       <Route path="/gate-punch" element={<GatePunchScanner />} />
+      <Route path="/qr-scan"    element={<QRScannerPage />} />
 
       {/* Protected admin routes */}
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        <Route index                element={<DashboardPage />} />
-        <Route path="employees"     element={<EmployeesPage />} />
-        <Route path="register"      element={<RegistrationPage />} />
-        <Route path="verify"        element={<VerificationPage />} />
-        <Route path="attendance"    element={<AttendancePage />} />
-        <Route path="locations"     element={<LocationsPage />} />
-        <Route path="gate-dashboard" element={<GatePunchDashboard />} />
+        <Route index                  element={<DashboardPage />} />
+        <Route path="employees"       element={<EmployeesPage />} />
+        <Route path="register"        element={<RegistrationPage />} />
+        <Route path="verify"          element={<VerificationPage />} />
+        <Route path="attendance"      element={<AttendancePage />} />
+        <Route path="locations"       element={<LocationsPage />} />
+        <Route path="gate-dashboard"  element={<GatePunchDashboard />} />
+        <Route path="qr-generator"    element={<QRGeneratorPage />} />
+        <Route path="qr-logs"         element={<QRScanLogsPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

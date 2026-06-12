@@ -5,7 +5,8 @@ import PWAInstallButton from '../ui/PWAInstallButton';
 import {
   MdDashboard, MdPersonAdd, MdFaceRetouchingNatural, MdAssignment,
   MdLogout, MdMenu, MdConstruction, MdPerson, MdPeople,
-  MdLocationOn, MdSensors,
+  MdLocationOn, MdSensors, MdQrCode, MdQrCodeScanner, MdListAlt,
+  MdOpenInNew,
 } from 'react-icons/md';
 
 const navItems = [
@@ -16,11 +17,29 @@ const navItems = [
   { to: '/attendance',     label: 'Attendance',        icon: MdAssignment                        },
   { to: '/locations',      label: 'Locations',         icon: MdLocationOn                        },
   { to: '/gate-dashboard', label: 'Gate Punches',      icon: MdSensors                           },
+  { to: '/qr-generator',   label: 'QR Generator',      icon: MdQrCode                            },
+  { to: '/qr-logs',        label: 'QR Scan Logs',      icon: MdListAlt                           },
 ];
+
+const ExternalNavLink = ({ href, label, icon: Icon, colorClass, borderClass, bgClass }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={
+      'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all border mt-1 ' +
+      colorClass + ' ' + borderClass + ' ' + bgClass
+    }
+  >
+    <Icon className="w-5 h-5 flex-shrink-0" />
+    <span className="flex-1">{label}</span>
+    <MdOpenInNew className="w-3.5 h-3.5 opacity-60 flex-shrink-0" />
+  </a>
+);
 
 export default function Layout() {
   const { admin, logout } = useAuth();
-  const navigate = useNavigate();
+  const navigate          = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
@@ -65,19 +84,25 @@ export default function Layout() {
           <NavItem key={item.to} {...item} />
         ))}
 
-        {/* Gate Punch Scanner — opens in new tab */}
-        
-         {/* Gate Punch Scanner — opens in new tab */}
-<a
-  href="/gate-punch"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-emerald-400 hover:bg-emerald-900/20 transition-all border border-emerald-800/30 mt-2"
->
-  <MdSensors className="w-5 h-5 flex-shrink-0" />
-  <span>Open Gate Scanner</span>
-  <span className="ml-auto text-xs bg-emerald-900/40 px-1.5 py-0.5 rounded">↗</span>
-</a>
+        {/* Gate Scanner — external tab */}
+        <ExternalNavLink
+          href="/gate-punch"
+          label="Open Gate Scanner"
+          icon={MdSensors}
+          colorClass="text-emerald-400"
+          borderClass="border-emerald-800/30"
+          bgClass="hover:bg-emerald-900/20"
+        />
+
+        {/* QR Scanner — external tab */}
+        <ExternalNavLink
+          href="/qr-scan"
+          label="Open QR Scanner"
+          icon={MdQrCodeScanner}
+          colorClass="text-violet-400"
+          borderClass="border-violet-800/30"
+          bgClass="hover:bg-violet-900/20"
+        />
       </nav>
 
       {/* Bottom: admin + install + logout */}
