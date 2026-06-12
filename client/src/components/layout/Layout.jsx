@@ -6,19 +6,20 @@ import {
   MdDashboard, MdPersonAdd, MdFaceRetouchingNatural, MdAssignment,
   MdLogout, MdMenu, MdConstruction, MdPerson, MdPeople,
   MdLocationOn, MdSensors, MdQrCode, MdQrCodeScanner, MdListAlt,
-  MdOpenInNew,
+  MdOpenInNew, MdQrCode2,
 } from 'react-icons/md';
 
 const navItems = [
-  { to: '/',               label: 'Dashboard',        icon: MdDashboard,            exact: true },
-  { to: '/employees',      label: 'Employees',         icon: MdPeople                            },
-  { to: '/register',       label: 'Register Employee', icon: MdPersonAdd                         },
-  { to: '/verify',         label: 'Face Verify',       icon: MdFaceRetouchingNatural             },
-  { to: '/attendance',     label: 'Attendance',        icon: MdAssignment                        },
-  { to: '/locations',      label: 'Locations',         icon: MdLocationOn                        },
-  { to: '/gate-dashboard', label: 'Gate Punches',      icon: MdSensors                           },
-  { to: '/qr-generator',   label: 'QR Generator',      icon: MdQrCode                            },
-  { to: '/qr-logs',        label: 'QR Scan Logs',      icon: MdListAlt                           },
+  { to: '/',               label: 'Dashboard',          icon: MdDashboard,            exact: true },
+  { to: '/employees',      label: 'Employees',           icon: MdPeople                            },
+  { to: '/register',       label: 'Register Employee',   icon: MdPersonAdd                         },
+  { to: '/verify',         label: 'Face Verify',         icon: MdFaceRetouchingNatural             },
+  { to: '/attendance',     label: 'Attendance',          icon: MdAssignment                        },
+  { to: '/locations',      label: 'Locations',           icon: MdLocationOn                        },
+  { to: '/gate-dashboard', label: 'Gate Punches',        icon: MdSensors                           },
+  // { to: '/qr-generator',   label: 'QR Generator',        icon: MdQrCode                            },
+  // { to: '/qr-logs',        label: 'QR Scan Logs',        icon: MdListAlt                           },
+  { to: '/qr-info-scanner',label: 'QR Information Scanner', icon: MdQrCode2                        },
 ];
 
 const ExternalNavLink = ({ href, label, icon: Icon, colorClass, borderClass, bgClass }) => (
@@ -95,14 +96,14 @@ export default function Layout() {
         />
 
         {/* QR Scanner — external tab */}
-        <ExternalNavLink
+        {/* <ExternalNavLink
           href="/qr-scan"
           label="Open QR Scanner"
           icon={MdQrCodeScanner}
           colorClass="text-violet-400"
           borderClass="border-violet-800/30"
           bgClass="hover:bg-violet-900/20"
-        />
+        /> */}
       </nav>
 
       {/* Bottom: admin + install + logout */}

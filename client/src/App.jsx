@@ -1,20 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import LoginPage          from './pages/LoginPage';
-import DashboardPage      from './pages/DashboardPage';
-import RegistrationPage   from './pages/RegistrationPage';
-import VerificationPage   from './pages/VerificationPage';
-import AttendancePage     from './pages/AttendancePage';
-import EmployeesPage      from './pages/EmployeesPage';
-import NotFoundPage       from './pages/NotFoundPage';
-import LocationsPage      from './pages/LocationsPage';
-import GatePunchDashboard from './pages/GatePunchDashboard';
-import GatePunchScanner   from './pages/GatePunchScanner';
-import QRGeneratorPage    from './pages/QRGeneratorPage';
-import QRScannerPage      from './pages/QRScannerPage';
-import QRScanLogsPage     from './pages/QRScanLogsPage';
-import Layout             from './components/layout/Layout';
+import LoginPage              from './pages/LoginPage';
+import DashboardPage          from './pages/DashboardPage';
+import RegistrationPage       from './pages/RegistrationPage';
+import VerificationPage       from './pages/VerificationPage';
+import AttendancePage         from './pages/AttendancePage';
+import EmployeesPage          from './pages/EmployeesPage';
+import NotFoundPage           from './pages/NotFoundPage';
+import LocationsPage          from './pages/LocationsPage';
+import GatePunchDashboard     from './pages/GatePunchDashboard';
+import GatePunchScanner       from './pages/GatePunchScanner';
+import QRGeneratorPage        from './pages/QRGeneratorPage';
+import QRScannerPage          from './pages/QRScannerPage';
+import QRScanLogsPage         from './pages/QRScanLogsPage';
+import QRInformationScannerPage from './pages/QRInformationScannerPage';
+import Layout                 from './components/layout/Layout';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
@@ -50,6 +51,7 @@ const AppRoutes = () => {
         <Route path="gate-dashboard"  element={<GatePunchDashboard />} />
         <Route path="qr-generator"    element={<QRGeneratorPage />} />
         <Route path="qr-logs"         element={<QRScanLogsPage />} />
+        <Route path="qr-info-scanner" element={<QRInformationScannerPage />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />
